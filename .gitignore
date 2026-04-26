@@ -79,3 +79,8 @@ jspm_packages/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Large data files
+*.traineddata
+eng.traineddata
+spa.traineddata
