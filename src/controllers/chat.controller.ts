@@ -66,7 +66,18 @@ export class ChatController {
 
   async queryStream(req: Request, res: Response) {
     try {
-      const request: QueryRequest = req.body;
+      // Soportar tanto 'message' como 'question' del frontend
+      const request: QueryRequest = {
+        question: req.body.message || req.body.question || '',
+        chatId: req.body.sessionId || req.body.chatId,
+        userId: req.body.userId
+      };
+      
+      // Validar que hay mensaje
+      if (!request.question) {
+        return res.status(400).json({ error: 'Message or question is required' });
+      }
+      
       const stream = streamingService.setupStreamingResponse(res);
 
       const response = await chatService.handleStreamingQuery(request, (chunk) => {

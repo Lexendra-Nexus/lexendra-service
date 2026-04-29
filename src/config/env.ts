@@ -1,13 +1,19 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.join(__dirname, '../../.env');
+
+// Buscar .env desde la raíz del proyecto (2 niveles arriba de src/config/)
+const projectRoot = path.resolve(__dirname, '../..');
+const envPath = path.join(projectRoot, '.env');
+
+console.log('Loading .env from:', envPath);
+console.log('File exists:', fs.existsSync(envPath));
 
 dotenv.config({ path: envPath });
-console.log('Loading .env from:', envPath);
 console.log('DEEPSEEK_API_KEY loaded:', !!process.env.DEEPSEEK_API_KEY);
 console.log('DEEPSEEK_API_URL loaded:', !!process.env.DEEPSEEK_API_URL);
 

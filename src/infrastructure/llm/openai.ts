@@ -12,7 +12,8 @@ class OpenAIService {
   }
 
   private createMockEmbedding(text: string): number[] {
-    const hash = Array.from(text).reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 0);
+    const safeText = text || 'default';
+    const hash = Array.from(safeText).reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 0);
     return Array.from({ length: 1536 }, (_, i) => Math.sin(hash + i));
   }
 
